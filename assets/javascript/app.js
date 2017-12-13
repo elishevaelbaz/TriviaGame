@@ -32,24 +32,25 @@ radioButton.append(label)
 form.append(quest, radioButton);
 
 
+//do again for other incorrect choices
+for (var i = 0; i < question1.incorrect.length; i++) {
+	
+	radioButton = $("<div>");
+	radioButton.addClass("radio incorr");
+	label = $("<label>");
+	input = $("<input>");
+	input.attr("type", "radio");
+	input.attr("name", "optradio");
+	input.attr("id", "question1"+"choice" + (i));
+
+	label.append(input);
+
+	label.append(question1.incorrect[i]);
+	radioButton.append(label)
 
 
-//do again for other choices
-radioButton = $("<div>");
-radioButton.addClass("radio incorr");
-label = $("<label>");
-input = $("<input>");
-input.attr("type", "radio");
-input.attr("name", "optradio");
-input.attr("id", "question1choice2");
-
-label.append(input);
-
-label.append(question1.incorrect[0]);
-radioButton.append(label)
-
-
-form.append( radioButton);
+	form.append( radioButton);
+}
 
 // radioButton = $("<div>");
 // radioButton.addClass("radio");
