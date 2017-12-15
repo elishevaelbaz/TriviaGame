@@ -43,9 +43,7 @@ var question10 = {question:"10. A full grown turkey has about how many feathers?
 correct:"3,500",
 incorrect:["A million", "Too many to count!"]};
 
-var array = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
-console.log(array);
-
+var array = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10];
 
 var form = $("form");
 
@@ -90,7 +88,7 @@ for (var j = 0; j < array.length; j++) {
 
 		//randomize the order of the choices
 		var rand = Math.floor(Math.random()*2);
-		console.log(i + "" + rand);
+
 		if (rand == 0){
 			section.append(radioButton);
 		}
@@ -122,8 +120,6 @@ function decrement() {
 	if (secondsLeft === 0) {
 
 		stop();
-
-		console.log("Time Up!");
 	}
 }
 
@@ -171,7 +167,6 @@ function displayResults(right, wrong){
 	numUnanswered.html("Unanswered: " + (array.length - right - wrong));
 	results.append(numCorrect, numIncorrect, numUnanswered);
 	$(".display-info").html(results);
-	console.log(numIncorrect);
 }
 
 function stop() {
