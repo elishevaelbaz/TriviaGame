@@ -4,6 +4,10 @@ body{
 
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container{
 /*background: url("../images/turkey.jpg");*/
 background-color: darksalmon;
@@ -11,13 +15,37 @@ background-color: darksalmon;
 margin-top:5%;
 margin-left:15%
 margin-right:15%;
+margin-bottom:5%;
 text-align: left;
-padding-left:30%;
-/*opacity: .5;*/
+padding-left:10%;
+padding-bottom:8%;
+padding-top:6%;
+width:70%;
+/*position:relative;*/
+opacity: .9;
 }
 
 .radio{
 
-	/*text-align:left;*/
+	text-align:match-parent;
 	/*margin-left:42%;*/
+}
+
+#title{
+	/*position:relative;*/
+	/*right:-20%;*/
+	/*left:-80px;*/
+	font-size:50px;
+	font-family: 'Bungee', cursive;
+}
+
+#show-number{
+	padding-left:20%;
+}
+
+.results{
+	width:50%;
+	margin-left:15%;
+	text-align:center;
+
 }

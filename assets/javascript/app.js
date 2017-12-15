@@ -50,71 +50,68 @@ console.log(array);
 
 var form = $("form");
 
+//for each question object in the array
 for (var j = 0; j < array.length; j++) {
 
-// the question
+// add the question
 var quest = $("<p>").text(array[j].question);
 var section = $("<section>");
-
 
 form.append("<br>");
 form.append(quest);
 
 
-//do again for other incorrect choices
-for (var i = 0; i < 3; i++) {
+	//for each radio button/ choice
+	//loop through to create radio buttons and display
+	for (var i = 0; i < 3; i++) {
 
-	var radioButton = $("<div>");
+		var radioButton = $("<div>");
 
-	label = $("<label>");
-	input = $("<input>");
-	input.attr("type", "radio");
-	input.attr("name", "optradio" + (j+1));
-	input.attr("id", "question"+(j+1)+"choice" + (i+1));
+		label = $("<label>");
+		input = $("<input>");
+		input.attr("type", "radio");
+		input.attr("name", "optradio" + (j+1));
+		input.attr("id", "question"+(j+1)+"choice" + (i+1));
 
-	label.append(input);
+		label.append(input);
 
-// section.append(radioButton);
-if (i == 0){
+	// first iteration is the correct choice
+		if (i == 0){
 
-	radioButton.addClass("radio corr");
-	// label = $("<label>");
-	// input = $("<input>");
-	// input.attr("type", "radio");
-	// input.attr("name", "optradio" + (i+1));
-	// input.attr("id", "question"+(j+1)+"choice1");
+			radioButton.addClass("radio corr");
+			label.append(array[j].correct);
 
-	// label.append(input);
+		}
 
-	label.append(array[j].correct);
-	// radioButton.append(label)
-}
+		// all the other iterations are the incorrect choices
+		else{
+			radioButton.addClass("radio incorr");
+			label.append(array[j].incorrect[i-1]);
+		}
 
-else{
-	radioButton.addClass("radio incorr");
-	label.append(array[j].incorrect[i-1]);
-}
-radioButton.append(label)
+		radioButton.append(label)
 
-
-	//randomize the order of the choices
-	var rand = Math.floor(Math.random()*2);
-	console.log(i + "" + rand);
-	if (rand == 0){
-
-
-		section.append(radioButton);
-	}
-	else{
-		section.prepend(radioButton);
-	}
-
+		//randomize the order of the choices
+		var rand = Math.floor(Math.random()*2);
+		console.log(i + "" + rand);
+		if (rand == 0){
+			section.append(radioButton);
+		}
+		else{
+			section.prepend(radioButton);
+		}
 	
+		form.append(section);
+	}
+}
 
-	
-	form.append(section);
-}
-}
+//submit button
+var submitButton = $("<button>");
+submitButton.addClass("btn btn-outline-primary");
+submitButton.attr("id", "submit");
+submitButton.text("Submit");
+form.append("<br>", submitButton);
+// <button type="button" class="">Primary</button>
 
 
 function run(){
@@ -136,35 +133,44 @@ function decrement() {
         // need to give number this value again, becuase otherwise when time is up, if user hits return, it will decrement from 0
         // and display negaive numbers
         // secondsLeft = 100;
+      }
+
     }
-}
 
-function calculateResults(){
+$(document).ready(function() {
 
-	
-	var counter = 0;
-	var incorrectCounter = 0;
+$("#submit").on("click", function() {
 
-for (var i = 0; i < array.length; i++) {
-	var x = document.getElementById("question"+(i+1)+"choice1").checked;
-  var y = document.getElementById("question"+(i+1)+"choice2").checked;
-  var z = document.getElementById("question"+(i+1)+"choice3").checked;
-    if (x){
-    	counter++
-		}
+       stop();
+      });
+});
+
+    function calculateResults(){
+
+
+    	var counter = 0;
+    	var incorrectCounter = 0;
+
+    	for (var i = 0; i < array.length; i++) {
+    		var x = document.getElementById("question"+(i+1)+"choice1").checked;
+    		var y = document.getElementById("question"+(i+1)+"choice2").checked;
+    		var z = document.getElementById("question"+(i+1)+"choice3").checked;
+    		if (x){
+    			counter++
+    		}
 
 		//calculate how many were answered incorrectly so 
 		// can see how many unanswered
 		else if ((y)||(z)){
 			incorrectCounter++
 		}
-	
+
 	}
 
-console.log("counter: " + counter);
-console.log("IncorrectCounter: " + incorrectCounter);
+	console.log("counter: " + counter);
+	console.log("IncorrectCounter: " + incorrectCounter);
 
-displayResults(counter, incorrectCounter)
+	displayResults(counter, incorrectCounter)
 
 // 	var results = $("<section class='results'>");
 // 	numCorrect = $("<h2 class='numCorrect'>");
@@ -191,11 +197,11 @@ function displayResults(right, wrong){
 	// $(".container").append(results);
 
 
-var results = $("<section class='results'>");
+	var results = $("<section class='results'>");
 	numCorrect = $("<h2 class='numCorrect'>");
-	numCorrect.html("Correct: " + right);
+	numCorrect.html("Correct Answers: " + right);
 	numIncorrect = $("<h2 class='numIncorrect'>");
-	numIncorrect.html("Incorrect: " + (wrong));
+	numIncorrect.html("Incorrect Answers: " + (wrong));
 	numUnanswered = $("<h2 class='numUnanswered'>");
 	numUnanswered.html("Unanswered: " + (array.length - right - wrong));
 	results.append(numCorrect, numIncorrect, numUnanswered);
