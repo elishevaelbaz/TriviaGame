@@ -46,20 +46,18 @@ incorrect:["A million", "Too many to count!"]};
 var array = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
 console.log(array);
 
-// var classArray = ["c", "i", "i", "i"];
 
 var form = $("form");
 
 //for each question object in the array
 for (var j = 0; j < array.length; j++) {
 
-// add the question
-var quest = $("<p>").text(array[j].question);
-var section = $("<section>");
+	// add the question
+	var quest = $("<p>").text(array[j].question);
+	var section = $("<section>");
 
-form.append("<br>");
-form.append(quest);
-
+	form.append("<br>");
+	form.append(quest);
 
 	//for each radio button/ choice
 	//loop through to create radio buttons and display
@@ -76,12 +74,11 @@ form.append(quest);
 		label.append(input);
 
 	// first iteration is the correct choice
-		if (i == 0){
+	if (i == 0){
 
-			radioButton.addClass("radio corr");
-			label.append(array[j].correct);
-
-		}
+		radioButton.addClass("radio corr");
+		label.append(array[j].correct);
+	}
 
 		// all the other iterations are the incorrect choices
 		else{
@@ -100,7 +97,7 @@ form.append(quest);
 		else{
 			section.prepend(radioButton);
 		}
-	
+
 		form.append(section);
 	}
 }
@@ -111,8 +108,6 @@ submitButton.addClass("btn btn-outline-primary");
 submitButton.attr("id", "submit");
 submitButton.text("Submit");
 form.append("<br>", submitButton);
-// <button type="button" class="">Primary</button>
-
 
 function run(){
 	intervalId = setInterval(decrement, 1000);
@@ -121,7 +116,7 @@ function run(){
 function decrement() {
 
 	secondsLeft--;
-
+	//display the time left
 	$("#show-number").html("<h2> Time Left: " + secondsLeft + " Seconds</h2>");
 
 	if (secondsLeft === 0) {
@@ -129,73 +124,43 @@ function decrement() {
 		stop();
 
 		console.log("Time Up!");
-
-        // need to give number this value again, becuase otherwise when time is up, if user hits return, it will decrement from 0
-        // and display negaive numbers
-        // secondsLeft = 100;
-      }
-
-    }
+	}
+}
 
 $(document).ready(function() {
 
-$("#submit").on("click", function() {
-
-       stop();
-      });
+	$("#submit").on("click", function() {
+			//if submit button is clicked
+			stop();
+		});
 });
 
-    function calculateResults(){
+function calculateResults(){
 
+	var counter = 0;
+	var incorrectCounter = 0;
 
-    	var counter = 0;
-    	var incorrectCounter = 0;
-
-    	for (var i = 0; i < array.length; i++) {
-    		var x = document.getElementById("question"+(i+1)+"choice1").checked;
-    		var y = document.getElementById("question"+(i+1)+"choice2").checked;
-    		var z = document.getElementById("question"+(i+1)+"choice3").checked;
-    		if (x){
-    			counter++
-    		}
+  //for each question
+  for (var i = 0; i < array.length; i++) {
+    var x = document.getElementById("question"+(i+1)+"choice1").checked;
+    var y = document.getElementById("question"+(i+1)+"choice2").checked;
+    var z = document.getElementById("question"+(i+1)+"choice3").checked;
+    //if x is true, it means that a correct answer was checked
+    if (x){
+    	counter++
+    }
 
 		//calculate how many were answered incorrectly so 
 		// can see how many unanswered
 		else if ((y)||(z)){
 			incorrectCounter++
 		}
-
 	}
-
-	console.log("counter: " + counter);
-	console.log("IncorrectCounter: " + incorrectCounter);
-
+	
 	displayResults(counter, incorrectCounter)
-
-// 	var results = $("<section class='results'>");
-// 	numCorrect = $("<h2 class='numCorrect'>");
-// 	numCorrect.html("Correct: " + counter);
-// 	numIncorrect = $("<h2 class='numIncorrect'>");
-// 	numIncorrect.html("Incorrect: " + (incorrectCounter));
-// 	numUnanswered = $("<h2 class='numUnanswered'>");
-// 	numUnanswered.html("Unanswered: " + (array.length - counter - incorrectCounter));
-// 	results.append(numCorrect, numIncorrect, numUnanswered);
-// 	$(".display-info").html(results);
-// 	console.log(numIncorrect);
-// displayResults();
-// return counter
-
 };
 
 function displayResults(right, wrong){
-	// var results = $("<section class='results'>");
-	// numCorrect = $("<div class='numCorrect'>");
-	// numCorrect.html("Correct: " + counter);
-	// numIncorrect = $("<div class='numIncorrect'>");
-	// numIncorrect.html("Incorrect: " + array.length-numCorrect);
-	// results.append(numCorrect, numIncorrect);
-	// $(".container").append(results);
-
 
 	var results = $("<section class='results'>");
 	numCorrect = $("<h2 class='numCorrect'>");
@@ -207,19 +172,12 @@ function displayResults(right, wrong){
 	results.append(numCorrect, numIncorrect, numUnanswered);
 	$(".display-info").html(results);
 	console.log(numIncorrect);
-
-
 }
 
 function stop() {
+
 	calculateResults();
-
 	clearInterval(intervalId);
-	// var windowTimeout = setTimeout(function(){
- //        $(".container").empty();
- //        // displayResults();
- //      }, 1000);
-
 }
 
 run();
