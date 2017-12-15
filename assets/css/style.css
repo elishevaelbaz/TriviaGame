@@ -1,0 +1,23 @@
+
+body{
+	background: url("../images/lines.jpg");
+
+}
+
+.container{
+/*background: url("../images/turkey.jpg");*/
+background-color: darksalmon;
+/*sandybrown*/
+margin-top:5%;
+margin-left:15%
+margin-right:15%;
+text-align: left;
+padding-left:30%;
+/*opacity: .5;*/
+}
+
+.radio{
+
+	/*text-align:left;*/
+	/*margin-left:42%;*/
+}
