@@ -9,9 +9,8 @@ body{
 }
 
 .container{
-/*background: url("../images/turkey.jpg");*/
 background-color: darksalmon;
-/*sandybrown*/
+
 margin-top:5%;
 margin-left:15%
 margin-right:15%;
@@ -21,20 +20,19 @@ padding-left:10%;
 padding-bottom:8%;
 padding-top:6%;
 width:70%;
-/*position:relative;*/
 opacity: .9;
+}
+
+img{
+	width:90%;
 }
 
 .radio{
 
 	text-align:match-parent;
-	/*margin-left:42%;*/
 }
 
 #title{
-	/*position:relative;*/
-	/*right:-20%;*/
-	/*left:-80px;*/
 	font-size:50px;
 	font-family: 'Bungee', cursive;
 }
@@ -48,4 +46,9 @@ opacity: .9;
 	margin-left:15%;
 	text-align:center;
 
+}
+
+#startButton{
+	margin:20px;
+	margin-left:35%;
 }

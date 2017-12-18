@@ -43,40 +43,44 @@ var question10 = {question:"10. A full grown turkey has about how many feathers?
 correct:"3,500",
 incorrect:["A million", "Too many to count!"]};
 
-var array = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10];
+var array = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
 
 var form = $("form");
 
-//for each question object in the array
-for (var j = 0; j < array.length; j++) {
+function displayQuestions(){
 
-	// add the question
-	var quest = $("<p>").text(array[j].question);
-	var section = $("<section>");
+	//for each question object in the array
+	for (var j = 0; j < array.length; j++) {
 
-	form.append("<br>");
-	form.append(quest);
+		// add the question
+		var quest = $("<p>").text(array[j].question);
+		var section = $("<section>");
 
-	//for each radio button/ choice
-	//loop through to create radio buttons and display
-	for (var i = 0; i < 3; i++) {
+		form.append("<br>");
+		form.append(quest);
 
-		var radioButton = $("<div>");
 
-		label = $("<label>");
-		input = $("<input>");
-		input.attr("type", "radio");
-		input.attr("name", "optradio" + (j+1));
-		input.attr("id", "question"+(j+1)+"choice" + (i+1));
+		//for each radio button/ choice
+		//loop through to create radio buttons and display
+		for (var i = 0; i < 3; i++) {
 
-		label.append(input);
+			var radioButton = $("<div>");
 
-	// first iteration is the correct choice
-	if (i == 0){
+			label = $("<label>");
+			input = $("<input>");
+			input.attr("type", "radio");
+			input.attr("name", "optradio" + (j+1));
+			input.attr("id", "question"+(j+1)+"choice" + (i+1));
 
-		radioButton.addClass("radio corr");
-		label.append(array[j].correct);
-	}
+			label.append(input);
+
+		// first iteration is the correct choice
+		if (i == 0){
+
+			radioButton.addClass("radio corr");
+			label.append(array[j].correct);
+
+		}
 
 		// all the other iterations are the incorrect choices
 		else{
@@ -88,13 +92,13 @@ for (var j = 0; j < array.length; j++) {
 
 		//randomize the order of the choices
 		var rand = Math.floor(Math.random()*2);
-
+		
 		if (rand == 0){
 			section.append(radioButton);
 		}
 		else{
 			section.prepend(radioButton);
-		}
+		}	
 
 		form.append(section);
 	}
@@ -107,6 +111,22 @@ submitButton.attr("id", "submit");
 submitButton.text("Submit");
 form.append("<br>", submitButton);
 
+}
+
+// when the start button is pressed - show the quiz
+function displayQuiz(){
+
+	$('#initial-page').empty();
+
+	var titleDisplay = $("#title");
+	titleDisplay.text("Thanksgiving Trivia");
+
+	var timer = $("<div id='show-number'>");
+	timer.text("Time Left: 100 Seconds");
+	$(".display-info").prepend(timer);
+	displayQuestions();
+}
+
 function run(){
 	intervalId = setInterval(decrement, 1000);
 }
@@ -114,7 +134,7 @@ function run(){
 function decrement() {
 
 	secondsLeft--;
-	//display the time left
+
 	$("#show-number").html("<h2> Time Left: " + secondsLeft + " Seconds</h2>");
 
 	if (secondsLeft === 0) {
@@ -123,12 +143,23 @@ function decrement() {
 	}
 }
 
+//When the submit button is clicked
 $(document).ready(function() {
 
-	$("#submit").on("click", function() {
-			//if submit button is clicked
-			stop();
-		});
+	$(document).on("click", "#submit", function() {
+
+		stop();
+	});
+
+
+//when the start button is clicked
+
+$("#startButton").on("click", function() {
+	event.preventDefault();
+	displayQuiz();
+
+
+});
 });
 
 function calculateResults(){
@@ -136,28 +167,28 @@ function calculateResults(){
 	var counter = 0;
 	var incorrectCounter = 0;
 
-  //for each question
-  for (var i = 0; i < array.length; i++) {
-    var x = document.getElementById("question"+(i+1)+"choice1").checked;
-    var y = document.getElementById("question"+(i+1)+"choice2").checked;
-    var z = document.getElementById("question"+(i+1)+"choice3").checked;
-    //if x is true, it means that a correct answer was checked
-    if (x){
-    	counter++
-    }
+	for (var i = 0; i < array.length; i++) {
+		var x = document.getElementById("question"+(i+1)+"choice1").checked;
+		var y = document.getElementById("question"+(i+1)+"choice2").checked;
+		var z = document.getElementById("question"+(i+1)+"choice3").checked;
+		if (x){
+			counter++
+		}
 
 		//calculate how many were answered incorrectly so 
 		// can see how many unanswered
 		else if ((y)||(z)){
 			incorrectCounter++
 		}
+
 	}
-	
+
 	displayResults(counter, incorrectCounter)
+
 };
 
 function displayResults(right, wrong){
-
+	
 	var results = $("<section class='results'>");
 	numCorrect = $("<h2 class='numCorrect'>");
 	numCorrect.html("Correct Answers: " + right);
@@ -167,11 +198,13 @@ function displayResults(right, wrong){
 	numUnanswered.html("Unanswered: " + (array.length - right - wrong));
 	results.append(numCorrect, numIncorrect, numUnanswered);
 	$(".display-info").html(results);
+	console.log(numIncorrect);
+
 }
 
 function stop() {
-
 	calculateResults();
+
 	clearInterval(intervalId);
 }
 
